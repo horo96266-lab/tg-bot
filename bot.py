@@ -86,7 +86,6 @@ def users(message):
     bot.send_message(message.chat.id, f"👥 Пользователей в боте: {get_user_count()}")
 
 
-if __name__ == "__main__":
-    bot.infinity_polling(timeout=30, long_polling_timeout=30)
+
 
 
