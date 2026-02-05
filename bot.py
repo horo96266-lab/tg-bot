@@ -1,5 +1,21 @@
 import os
 import telebot
+import os
+from flask import Flask
+from threading import Thread
+
+app = Flask(__name__)
+
+@app.get("/")
+def home():
+    return "ok", 200
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
+
+Thread(target=run_web, daemon=True).start()
+
 from telebot import types
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")  # <-- токен придёт из Render
@@ -63,3 +79,4 @@ def users(message):
 
 if __name__ == "__main__":
     bot.infinity_polling(timeout=30, long_polling_timeout=30)
+
