@@ -1,14 +1,23 @@
 import os
 import telebot
 import os
-from flask import Flask
+from flask import Flask, request
 from threading import Thread
 
 app = Flask(__name__)
 
-@app.get("/")
+@app.route("/", methods=["GET"])
 def home():
     return "ok", 200
+
+
+@app.route("/", methods=["POST"])
+def webhook():
+    json_str = request.get_data().decode("utf-8")
+    update = types.Update.de_json(json_str)
+    bot.process_new_updates([update])
+    return "ok", 200
+
 
 def run_web():
     port = int(os.environ.get("PORT", 10000))
@@ -79,4 +88,5 @@ def users(message):
 
 if __name__ == "__main__":
     bot.infinity_polling(timeout=30, long_polling_timeout=30)
+
 
